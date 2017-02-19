@@ -1,0 +1,138 @@
+{
+  "ngDeps": {
+    "1": "",
+    "3": [
+      {
+        "1": "dart:math",
+        "5": false
+      },
+      {
+        "1": "dartulator_strings.dart",
+        "5": false
+      }
+    ],
+    "6": "calculation_handler.dart"
+  },
+  "type": {
+    "_add": {
+      "class": "Identifier",
+      "name": "_add",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_subtract": {
+      "class": "Identifier",
+      "name": "_subtract",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_multiply": {
+      "class": "Identifier",
+      "name": "_multiply",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_divide": {
+      "class": "Identifier",
+      "name": "_divide",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_percent": {
+      "class": "Identifier",
+      "name": "_percent",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_nthRoot": {
+      "class": "Identifier",
+      "name": "_nthRoot",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_tenBase": {
+      "class": "Identifier",
+      "name": "_tenBase",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_multiplyPi": {
+      "class": "Identifier",
+      "name": "_multiplyPi",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_multiplyNaturalE": {
+      "class": "Identifier",
+      "name": "_multiplyNaturalE",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_baseE": {
+      "class": "Identifier",
+      "name": "_baseE",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_log": {
+      "class": "Identifier",
+      "name": "_log",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_baseTen": {
+      "class": "Identifier",
+      "name": "_baseTen",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_arcTrigWrapper": {
+      "class": "Identifier",
+      "name": "_arcTrigWrapper",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_trigWrapper": {
+      "class": "Identifier",
+      "name": "_trigWrapper",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_gamma": {
+      "class": "Identifier",
+      "name": "_gamma",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "_factorial": {
+      "class": "Identifier",
+      "name": "_factorial",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    },
+    "getOperation": {
+      "class": "Identifier",
+      "name": "getOperation",
+      "moduleUrl": "asset:dartulator/lib/util/calculation_handler.dart",
+      "prefix": null,
+      "value": null
+    }
+  },
+  "alias": {}
+}

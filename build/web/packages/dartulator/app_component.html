@@ -1,0 +1,222 @@
+<h1>Dartulator</h1>
+<paper-card class="horizontal"
+            raised>
+    <div class="answer">{{previousAnswerString}}</div>
+    <div class="value">
+        <span>
+            {{calculationDisplay}}<span class="closingParenthesis">{{closingParenthesis}}</span>
+        </span>
+    </div>
+    <table>
+        <tr>
+            <td>
+                <div *ngIf="!toggled">
+                    <table class="dartulator_advanced">
+                        <!--first four rows of non inverted calculator-->
+                        <tr class="1"
+                            *ngFor="let row of advancedRows">
+                            <td *ngFor="let item of row">
+                                <paper-button raised
+                                              noink
+                                              title="{{item}}"
+                                              (click)="handleAdvanced(item)">
+                                    {{item}}
+                                </paper-button>
+                            </td>
+                        </tr>
+                        <tr class="manual">
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="Ans"
+                                              (click)="handleAdvanced('Ans')">
+                                    Ans
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="EXP"
+                                              (click)="handleAdvanced('EXP')">
+                                    EXP
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="x^y"
+                                              (click)="handleAdvanced('x^y')">
+                                    x
+                                    <super-script>y</super-script>
+                                </paper-button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div *ngIf="toggled">
+                    <table class="dartulator_advanced">
+                        <tr class="manual">
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="Rad"
+                                              (click)="handleAdvanced('Rad')">
+                                    Rad
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="Deg"
+                                              (click)="handleAdvanced('Deg')">
+                                    Deg
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="x!"
+                                              (click)="handleAdvanced('x!')">
+                                    x!
+                                </paper-button>
+                            </td>
+                        </tr>
+                        <tr class="manual">
+                            <td>
+                                <!-- todo, handle background color change in forloop-->
+                                <paper-button raised
+                                              noink
+                                              style="background-color: #F5F5F5"
+                                              title="Inv"
+                                              (click)="handleAdvanced('Inv')">
+                                    Inv
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="sin^-1"
+                                              (click)="handleAdvanced('sin^-1')">
+                                    sin
+                                    <super-script>-1</super-script>
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="e^x"
+                                              (click)="handleAdvanced('e^x')">
+                                    e
+                                    <super-script>x</super-script>
+
+                                </paper-button>
+                            </td>
+                        </tr>
+                        <tr class="manual">
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="π"
+                                              (click)="handleAdvanced('π')">
+                                    π
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="cos^-1"
+                                              (click)="handleAdvanced('cos^-1')">
+                                    cos
+                                    <super-script>-1</super-script>
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="10^x"
+                                              (click)="handleAdvanced('10^x')">
+                                    10
+                                    <super-script>x</super-script>
+
+                                </paper-button>
+                            </td>
+                        </tr>
+                        <tr class="manual">
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="e"
+                                              (click)="handleAdvanced('e')">
+                                    e
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="tan^-1"
+                                              (click)="handleAdvanced('tan^-1')">
+                                    tan
+                                    <super-script>-1</super-script>
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="x^2"
+                                              (click)="handleAdvanced('x^2')">
+                                    x
+                                    <super-script>2</super-script>
+
+                                </paper-button>
+                            </td>
+                        </tr>
+                        <tr class="manual">
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="Rnd"
+                                              (click)="handleAdvanced('Rnd')">
+                                    Rnd
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="EXP"
+                                              (click)="handleAdvanced('EXP')">
+                                    EXP
+                                </paper-button>
+                            </td>
+                            <td>
+                                <paper-button raised
+                                              noink
+                                              title="y√x"
+                                              (click)="handleAdvanced('y√x')">
+                                    <super-script>y</super-script>
+                                    √x
+
+                                </paper-button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <td>
+                <!--right side of calculator-->
+                <table class="dartulator_basic">
+                    <tr *ngFor="let row of basicRows">
+                        <td *ngFor="let item of row">
+                            <!-- todo: find a way to highlight rad and deg buttons-->
+                            <paper-button raised
+                                          noink
+                                          title="{{item}}"
+                                          (click)="handleBasic(item)">
+                                {{item}}
+                            </paper-button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</paper-card>

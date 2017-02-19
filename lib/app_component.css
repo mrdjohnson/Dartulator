@@ -1,0 +1,84 @@
+:host {
+    /* This is equivalent of the 'body' selector of a page. */
+}
+
+paper-card {
+    padding-top: 10px;
+}
+
+.value {
+    text-align: right;
+    font-size: 180%;
+    border: 1px solid lightgray;
+    padding-right: 25px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+[title~='='] {
+    background-color: #4d90fe;
+    color: white;
+    font-weight: 900;
+}
+
+super-script {
+    font-size: .83em;
+    line-height: 0.5em;
+    vertical-align: baseline;
+    position: relative;
+    top: -0.4em;
+
+}
+
+.dartulator_advanced,
+.dartulator_basic {
+    margin-bottom: 5px;
+    height: 100%;
+}
+
+paper-button {
+    margin-top: 1px;
+    margin-bottom: 7px;
+    background-color: #E0E0E0;
+    font-weight: 500;
+    font-size: 100%;
+    height: 40px;
+    width: 50px;
+    position: inherit;
+    text-transform: none;
+}
+
+[title~='0'],
+[title~='1'],
+[title~='2'],
+[title~='3'],
+[title~='4'],
+[title~='5'],
+[title~='6'],
+[title~='7'],
+[title~='8'],
+[title~='9'],
+[title~='.'] {
+    background-color: #F5F5F5;
+    font-weight: 400;
+    font-size: 100%;
+}
+
+.closingParenthesis,
+.answer {
+    padding-left: 0;
+    color: lightgray;
+}
+
+.answer {
+    font-weight: 200;
+    text-align: right;
+    padding-right: 25px;
+    padding-bottom: 0;
+}
+
+span {
+    padding: 0 0 0 0;
+}

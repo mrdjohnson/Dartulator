@@ -1,0 +1,188 @@
+{
+  "ngDeps": null,
+  "type": {
+    "clear": {
+      "class": "Identifier",
+      "name": "clear",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "equals": {
+      "class": "Identifier",
+      "name": "equals",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "radians": {
+      "class": "Identifier",
+      "name": "radians",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "degrees": {
+      "class": "Identifier",
+      "name": "degrees",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "factorial": {
+      "class": "Identifier",
+      "name": "factorial",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "inverse": {
+      "class": "Identifier",
+      "name": "inverse",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "sine": {
+      "class": "Identifier",
+      "name": "sine",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "naturalLog": {
+      "class": "Identifier",
+      "name": "naturalLog",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "pi": {
+      "class": "Identifier",
+      "name": "pi",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "cosine": {
+      "class": "Identifier",
+      "name": "cosine",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "logOfX": {
+      "class": "Identifier",
+      "name": "logOfX",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "naturalE": {
+      "class": "Identifier",
+      "name": "naturalE",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "tangent": {
+      "class": "Identifier",
+      "name": "tangent",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "sqrtSymbol": {
+      "class": "Identifier",
+      "name": "sqrtSymbol",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "answer": {
+      "class": "Identifier",
+      "name": "answer",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "zeros": {
+      "class": "Identifier",
+      "name": "zeros",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "zerosShort": {
+      "class": "Identifier",
+      "name": "zerosShort",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "exponent": {
+      "class": "Identifier",
+      "name": "exponent",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "arcsin": {
+      "class": "Identifier",
+      "name": "arcsin",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "eToPower": {
+      "class": "Identifier",
+      "name": "eToPower",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "arccos": {
+      "class": "Identifier",
+      "name": "arccos",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "tenToPower": {
+      "class": "Identifier",
+      "name": "tenToPower",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "arctan": {
+      "class": "Identifier",
+      "name": "arctan",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "squared": {
+      "class": "Identifier",
+      "name": "squared",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "random": {
+      "class": "Identifier",
+      "name": "random",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    },
+    "nthRoot": {
+      "class": "Identifier",
+      "name": "nthRoot",
+      "moduleUrl": "asset:dartulator/lib/util/dartulator_strings.dart",
+      "prefix": null,
+      "value": null
+    }
+  },
+  "alias": {}
+}

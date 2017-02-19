@@ -1,0 +1,132 @@
+{
+  "ngDeps": {
+    "1": "",
+    "3": [
+      {
+        "1": "package:initialize/src/static_loader.dart",
+        "5": false
+      },
+      {
+        "1": "package:initialize/initialize.dart",
+        "5": false
+      },
+      {
+        "1": "index.bootstrap.dart",
+        "4": "i0",
+        "5": false
+      },
+      {
+        "1": "package:polymer_interop/src/convert.dart",
+        "4": "i1",
+        "5": false
+      },
+      {
+        "1": "package:web_components/html_import_annotation.dart",
+        "4": "i2",
+        "5": false
+      },
+      {
+        "1": "package:polymer_interop/polymer_interop.dart",
+        "4": "i3",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/iron_flex_layout.dart",
+        "4": "i4",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/iron_a11y_keys_behavior.dart",
+        "4": "i5",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/iron_control_state.dart",
+        "4": "i6",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/iron_button_state.dart",
+        "4": "i7",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/paper_ripple.dart",
+        "4": "i8",
+        "5": false
+      },
+      {
+        "1": "package:web_components/custom_element_proxy.dart",
+        "4": "i9",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/paper_ripple_behavior.dart",
+        "4": "i10",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/paper_button_behavior.dart",
+        "4": "i11",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/shadow.dart",
+        "4": "i12",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/paper_material_shared_styles.dart",
+        "4": "i13",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/paper_material.dart",
+        "4": "i14",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/paper_button.dart",
+        "4": "i15",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/iron_image.dart",
+        "4": "i16",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/color.dart",
+        "4": "i17",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/default_theme.dart",
+        "4": "i18",
+        "5": false
+      },
+      {
+        "1": "package:polymer_elements/paper_card.dart",
+        "4": "i19",
+        "5": false
+      }
+    ],
+    "6": "index.bootstrap.initialize.dart",
+    "7": [
+      {
+        "1": "index.bootstrap.template.dart",
+        "4": "i0"
+      }
+    ]
+  },
+  "type": {
+    "main": {
+      "class": "Identifier",
+      "name": "main",
+      "moduleUrl": "asset:dartulator/web/index.bootstrap.initialize.dart",
+      "prefix": null,
+      "value": null
+    }
+  },
+  "alias": {}
+}
