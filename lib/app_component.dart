@@ -144,7 +144,7 @@ class AppComponent {
     }
 
     multiplyByLastIfNeeded(true);
-    addItem(item, displayOverride, item is String);
+    addItem(item, displayOverride, item is String || item == '-');
 
     //close wrapping
     if (displayOverride != null) {
@@ -282,6 +282,15 @@ class AppComponent {
     }
   }
 
+  bool startingNegativeNumber(String item) {
+    if (item != '-') return false;
+
+    if (equationItems.last.toString() != '0' &&
+        !equationStarted) return false;
+
+    return !currentlyHandlingNumber;
+  }
+
   void handleBasic(item) {
     print("handling basic item: " + item);
 
@@ -292,7 +301,7 @@ class AppComponent {
     } else if (item == '(' || item == ')') {
       handleOperator(item);
       //decimal or negative number cases
-    } else if (item == '.' || (item == '-' && !currentlyHandlingNumber)) {
+    } else if (item == '.' || startingNegativeNumber(item)) {
       handleNumber(item);
       //if this contains anything that is not a number
     } else if (nonNumberMatcher.hasMatch(item)) {
