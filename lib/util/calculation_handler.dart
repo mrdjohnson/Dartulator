@@ -59,11 +59,11 @@ num _gamma(num x) {
 }
 
 num _factorial(num x) {
-  if (x is double) {
+  if (x.toString().contains(".")) {
     return _gamma(x + 1);
   }
 
-  var total = 1;
+  int total = 1;
   while (x > 1) {
     total *= x--;
   }
