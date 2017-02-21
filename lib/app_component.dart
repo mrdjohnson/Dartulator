@@ -366,7 +366,7 @@ class AppComponent {
       equationItems.add(totalValue);
 
       //this fixes precision issues sqrt(2)*sqrt(2) = 2.000000000004
-      if (totalValue is double) {
+      if (totalValue.toString().contains(".")) {
         totalValue = totalValue.toStringAsFixed(10);
         totalValue = num.parse(totalValue);
       }
