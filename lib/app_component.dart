@@ -208,19 +208,27 @@ class AppComponent {
       equationStarted = true;
     }
 
+    display ??= item.toString();
+
     //adding to current number
     if (isNumber && currentlyHandlingNumber) {
       print('increasing number value and exiting');
       equationItems.add(equationItems.removeLast() + item);
-      addToCalculatorDisplay(item.toString());
+      addToCalculatorDisplay(display);
       return;
     }
 
-    //turn number into an actual num and then continue
     if (currentlyHandlingNumber) {
-      print('converting previous string to actual number');
-      equationItems.add(num.parse(equationItems.removeLast().toString()));
-      currentlyHandlingNumber = false;
+      //attempting to do negative pi or negative e
+      if (equationItems.last == '-') {
+        addItem('1', '', true);
+        addItem('*', '');
+        handleTotalItemsAdded(3);
+      } else {
+        print('converting previous string to actual number');
+        equationItems.add(num.parse(equationItems.removeLast().toString()));
+        currentlyHandlingNumber = false;
+      }
     }
 
     if (item == ')') {
@@ -248,7 +256,7 @@ class AppComponent {
     currentlyHandlingNumber = lastNumber.isNotEmpty;
   }
 
-  void removeLast([skipNumberCheck = false]) {
+  void removeLast() {
     if (!equationStarted) {
       //clearEquationVariables will be called because of this
       calculationDisplayList.clear();
@@ -259,17 +267,20 @@ class AppComponent {
     if (calculationDisplayList.last is num) {
       num amount = calculationDisplayList.removeLast();
       for (int x = 0; x < amount; x++) {
-        removeLast(true);
+        removeLast();
       }
       return;
     }
 
-    if (!skipNumberCheck) {
-      if ((equationItems.last is num && equationStarted) ||
-          currentlyHandlingNumber) {
-        removeLastNumber();
-        return;
-      }
+    // if the last displayed item is not one of these
+    bool isManualNumber = ![pi, answer, naturalE].contains(
+        calculationDisplayList.last);
+
+    if (isManualNumber &&
+        ((equationItems.last is num && equationStarted) ||
+            currentlyHandlingNumber)) {
+      removeLastNumber();
+      return;
     }
     currentlyHandlingNumber = false;
 
