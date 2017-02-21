@@ -84,7 +84,7 @@ class AppComponent {
   }
 
   void updatePreviousAnswer() {
-    previousAnswerString ??= '$answer = ${previousAnswerValue}';
+    previousAnswerString = '$answer = ${previousAnswerValue}';
   }
 
   bool moveIsNotValid(item,
