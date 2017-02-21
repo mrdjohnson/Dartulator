@@ -180,7 +180,6 @@ class AppComponent {
     if (item == '(') {
       closingParenthesis += ')';
     } else if (item == ')') {
-      closingParenthesis = closingParenthesis.substring(1);
       checkMultiplier = false;
     }
 
@@ -222,6 +221,10 @@ class AppComponent {
       print('converting previous string to actual number');
       equationItems.add(num.parse(equationItems.removeLast().toString()));
       currentlyHandlingNumber = false;
+    }
+
+    if (item == ')') {
+      closingParenthesis = closingParenthesis.substring(1);
     }
 
     display ??= item.toString();
@@ -344,7 +347,7 @@ class AppComponent {
   void handleEquals() {
     //close out the parenthesis
     while (closingParenthesis.isNotEmpty) {
-      handleOperator(')');
+      addItem(')');
     }
 
     //finish processing number
