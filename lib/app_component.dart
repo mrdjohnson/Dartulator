@@ -6,10 +6,11 @@ import 'dart:math' show Random, PI, E;
 
 import 'package:angular2/core.dart';
 import 'package:angular2_components/angular2_components.dart';
-import 'package:dartulator/util/equation_processor.dart';
 
-import 'util/calculation_handler.dart' show usingDegrees;
+import 'util/calculation.dart'
+    show Calculation, BasicCalculation, getCalculation;
 import 'util/dartulator_strings.dart';
+import 'util/equation_processor.dart';
 
 //import 'package:dartulator/dartulator_basic/dartulator_basic.dart';
 
@@ -24,11 +25,11 @@ import 'util/dartulator_strings.dart';
 )
 class AppComponent {
   final List<List<String>> basicRows = [
-    ['(', ')', '%', clear],
-    ['7', '8', '9', '÷'],
-    ['4', '5', '6', '*'],
-    ['1', '2', '3', '-'],
-    ['0', '.', equals, '+']
+    [parenthesis_open, parenthesis_close, percent_symbol, clear],
+    ['7', '8', '9', divide],
+    ['4', '5', '6', multiply],
+    ['1', '2', '3', subtract],
+    ['0', decimal, equals, add]
   ];
 
   final List<List<String>> advancedRows = [
@@ -49,7 +50,6 @@ class AppComponent {
 //  ];
 
   final RegExp nonNumberMatcher = new RegExp(r"[^0-9]");
-  final List<String> basicOperators = const ['+', '-', '/', '÷', '*', '^'];
 
   String calculationDisplay = "0";
   List calculationDisplayList = ['0'];
@@ -69,7 +69,7 @@ class AppComponent {
 
   void multiplyByLastIfNeeded([isNumber = false]) {
     if (!equationStarted ||
-        equationItems.last == '(' ||
+        equationItems.last == parenthesis_open ||
         (isNumber && currentlyHandlingNumber) ||
         (isNumber && equationItems.last == zerosShort)) {
       return;
@@ -77,9 +77,9 @@ class AppComponent {
 
     var last = equationItems.last;
     if (last is num ||
-        last == ')' ||
-        !basicOperators.contains(last)) {
-      addItem('*');
+        last == parenthesis_close ||
+        last is! BasicCalculation) {
+      addItem(multiply);
     }
   }
 
@@ -102,15 +102,15 @@ class AppComponent {
           there are not parenthesis to close or
           inner parenthesis was not finished yet
       */
-    if (item == ')' && (equationItems.last == '(' ||
+    if (item == parenthesis_close && (equationItems.last == parenthesis_open ||
         closingParenthesis.isEmpty ||
-        basicOperators.contains(equationItems.last) ||
+        equationItems.last is BasicCalculation ||
         equationItems.last == zerosShort)) {
       return true;
     }
 
     //starting an operation without a number
-    if (isBasicOperator && equationItems.last == '(') {
+    if (isBasicOperator && equationItems.last == parenthesis_open) {
       return true;
     }
 
@@ -120,12 +120,12 @@ class AppComponent {
     }
 
     //processing E with a symbol
-    if (processingZeros && (item == '.' || !isNumber)) {
+    if (processingZeros && (item == decimal || !isNumber)) {
       return true;
     }
 
     //trying to make a double a double example: 2.34.5
-    if (item == '.' && equationItems.last.toString().contains('.')) {
+    if (item == decimal && equationItems.last.toString().contains(decimal)) {
       return true;
     }
 
@@ -140,15 +140,15 @@ class AppComponent {
       //wrap things like pi and e in parenthesis
     } else if (displayOverride != null) {
       print("wrapping number in parenthesis");
-      handleOperator('(', displayOverride: '');
+      handleOperator(parenthesis_open, displayOverride: '');
     }
 
     multiplyByLastIfNeeded(true);
-    addItem(item, displayOverride, item is String || item == '-');
+    addItem(item, displayOverride, item is String || item == subtract);
 
     //close wrapping
     if (displayOverride != null) {
-      handleOperator(')', displayOverride: '');
+      handleOperator(parenthesis_close, displayOverride: '');
       handleTotalItemsAdded(3);
     }
   }
@@ -177,9 +177,9 @@ class AppComponent {
     //we made it here which means we are no longer processing zeros
     processingZeros = false;
 
-    if (item == '(') {
-      closingParenthesis += ')';
-    } else if (item == ')') {
+    if (item == parenthesis_open) {
+      closingParenthesis += parenthesis_close;
+    } else if (item == parenthesis_close) {
       checkMultiplier = false;
     }
 
@@ -194,9 +194,9 @@ class AppComponent {
     //isNumber is the override for '.' and '-'
     //only allow things like 0 + (!^*-+/)
     if (isNumber ||
-        (item != '!' &&
-            item != '%' &&
-            !basicOperators.contains(item))) {
+        (item != factorial_symbol &&
+            item != percent_symbol &&
+            item is! BasicCalculation)) {
       print("overwriting the previous value");
       clearEquationVariables();
     }
@@ -220,9 +220,9 @@ class AppComponent {
 
     if (currentlyHandlingNumber) {
       //attempting to do negative pi or negative e
-      if (equationItems.last == '-') {
+      if (equationItems.last == subtract) {
         addItem('1', '', true);
-        addItem('*', '');
+        addItem(multiply, '');
         handleTotalItemsAdded(3);
       } else {
         print('converting previous string to actual number');
@@ -231,13 +231,12 @@ class AppComponent {
       }
     }
 
-    if (item == ')') {
+    if (item == parenthesis_close) {
       closingParenthesis = closingParenthesis.substring(1);
     }
 
-    display ??= item.toString();
     print("adding $item displaying as $display and exiting");
-    equationItems.add(item);
+    equationItems.add(getCalculation(item));
     addToCalculatorDisplay(display);
 
     currentlyHandlingNumber = isNumber;
@@ -289,15 +288,15 @@ class AppComponent {
 
 
     //ensure the parenthesis are always correct
-    if (item == ')') {
-      closingParenthesis += ')';
-    } else if (item == '(') {
+    if (item == parenthesis_close) {
+      closingParenthesis += parenthesis_close;
+    } else if (item == parenthesis_open) {
       closingParenthesis = closingParenthesis.substring(1);
     }
   }
 
   bool startingNegativeNumber(String item) {
-    if (item != '-') return false;
+    if (item != subtract) return false;
 
     if (equationItems.last.toString() != '0' &&
         !equationStarted) return false;
@@ -312,10 +311,10 @@ class AppComponent {
       handleClear();
     } else if (item == equals) {
       handleEquals();
-    } else if (item == '(' || item == ')') {
+    } else if (item == parenthesis_open || item == parenthesis_close) {
       handleOperator(item);
       //decimal or negative number cases
-    } else if (item == '.' || startingNegativeNumber(item)) {
+    } else if (item == decimal || startingNegativeNumber(item)) {
       handleNumber(item);
       //if this contains anything that is not a number
     } else if (nonNumberMatcher.hasMatch(item)) {
@@ -358,11 +357,11 @@ class AppComponent {
   void handleEquals() {
     //close out the parenthesis
     while (closingParenthesis.isNotEmpty) {
-      addItem(')');
+      addItem(parenthesis_close);
     }
 
     //finish processing number
-    if (currentlyHandlingNumber && equationItems.last != '-') {
+    if (currentlyHandlingNumber && equationItems.last != subtract) {
       equationItems.add(num.parse(equationItems.removeLast()));
     }
 
@@ -380,7 +379,7 @@ class AppComponent {
       equationItems.add(totalValue);
 
       //this fixes precision issues sqrt(2)*sqrt(2) = 2.000000000004
-      if (totalValue.toString().contains(".")) {
+      if (totalValue.toString().contains(decimal)) {
         totalValue = totalValue.toStringAsFixed(10);
         totalValue = num.parse(totalValue);
       }
@@ -405,11 +404,11 @@ class AppComponent {
 
     switch (item) {
       case radians:
-        usingDegrees = false;
+        Calculation.usingDegrees = false;
         return;
 
       case degrees:
-        usingDegrees = true;
+        Calculation.usingDegrees = true;
         return;
 
       case inverse:
@@ -438,11 +437,11 @@ class AppComponent {
         return;
 
       case exponent:
-        handleBasicOperator('^');
+        handleBasicOperator(exponent_symbol);
         return;
 
       case factorial:
-        handleBasicOperator('!');
+        handleBasicOperator(factorial_symbol);
         return;
 
       case arccos:
@@ -455,9 +454,9 @@ class AppComponent {
         displayOverride = "arcsin";
         break;
 
-      case nthRoot:
+      case nthRootSymbol:
         checkMultiplier = false;
-        displayOverride = "^$sqrtSymbol";
+        displayOverride = "$exponent_symbol$sqrtSymbol";
         break;
 
       default:
@@ -465,7 +464,7 @@ class AppComponent {
 
     handleOperator(item, displayOverride: displayOverride,
         checkMultiplier: checkMultiplier);
-    handleOperator('(', checkMultiplier: false);
+    handleOperator(parenthesis_open, checkMultiplier: false);
     handleTotalItemsAdded(2);
   }
 

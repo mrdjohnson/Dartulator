@@ -1,5 +1,5 @@
 name: dartulator
-description: A Dart app that uses Angular 2
+description: A Dart clone of Google's calculator widget
 version: 0.0.1
 environment:
   sdk: '>=1.19.0 <2.0.0'

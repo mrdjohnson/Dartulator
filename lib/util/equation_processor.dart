@@ -1,83 +1,64 @@
 import "dart:collection";
 
-import 'calculation_handler.dart';
-import 'dartulator_strings.dart';
+import 'calculation.dart'
+    show Calculation, UnaryCalculation, BinaryCalculation;
+import 'dartulator_strings.dart' show parenthesis_open, parenthesis_close;
 
 class EquationProcessor {
 
   // modified from https://www.tutorialspoint.com/javaexamples/data_intopost.htm
-  static process(List input) {
-    Queue<String> operators = new Queue();
+  static process(List equationList) {
+    Queue calculations = new Queue();
     List postfixList = [];
 
-    int _getImportanceLevel(String symbol) {
-      switch (symbol) {
-        case '+':
-        case '-':
-          return 1;
-        case '*':
-        case '÷':
-        case '/':
-          return 2;
-        case '^':
-          return 3;
-        case '!':
-        case '%':
-          return 4;
-        default:
-          return 5;
-      }
-    }
-
-    void _handleOperator(String newOperator) {
-      while (operators.isNotEmpty) {
-        String lastOperator = operators.removeLast();
-        if (lastOperator == '(') {
-          operators.addLast(lastOperator);
+    void _handleCalculation(Calculation newCalculation) {
+      while (calculations.isNotEmpty) {
+        if (calculations.last is String) {
           break;
         }
 
-        if (_getImportanceLevel(lastOperator) < _getImportanceLevel(newOperator)) {
-          operators.addLast(lastOperator);
+        Calculation lastCalculation = calculations.removeLast();
+
+        if (lastCalculation.hasLessPrecedenceThan(newCalculation)) {
+          calculations.addLast(lastCalculation);
           break;
         }
 
-        postfixList.add(lastOperator);
+        postfixList.add(lastCalculation);
       }
 
-      operators.addLast(newOperator);
+      calculations.addLast(newCalculation);
     }
 
-    void _handleParenthesis(String char) {
-      while (operators.isNotEmpty) {
-        String last = operators.removeLast();
-        if (last == '(')
+    void _handleParenthesis() {
+      while (calculations.isNotEmpty) {
+        var last = calculations.removeLast();
+        if (last == parenthesis_open)
           break;
         else
           postfixList.add(last);
       }
     }
 
-    num _convert() {
-      for (var equationItem in input) {
+    _convert() {
+      for (var equationItem in equationList) {
         if (equationItem is num) {
           postfixList.add(equationItem);
-        } else if (equationItem == '(') {
-          operators.addLast(equationItem);
-        } else if (equationItem == ')') {
-          _handleParenthesis(equationItem);
+        } else if (equationItem == parenthesis_open) {
+          calculations.addLast(equationItem);
+        } else if (equationItem == parenthesis_close) {
+          _handleParenthesis();
         } else {
-          _handleOperator(equationItem);
+          _handleCalculation(equationItem);
         }
       }
 
-      while (operators.isNotEmpty) {
-        postfixList.add(operators.removeLast());
+      while (calculations.isNotEmpty) {
+        postfixList.add(calculations.removeLast());
       }
 
       return calculate(postfixList);
     }
-
 
     try {
       return _convert();
@@ -86,32 +67,27 @@ class EquationProcessor {
     }
   }
 
-  static const List _singleDigitOperators = const [
-    '!',
-    '%',
-    pi,
-    naturalE,
-    sqrtSymbol
-  ];
-
   //modified from http://kevinyavno.com/blog/?p=52
   static calculate(List infixList) {
     Queue<num> tempNumberList = new Queue();
-    for (var equationItem in infixList) {
-      if (equationItem is num) {
-        tempNumberList.addLast(equationItem);
+    for (var infixItem in infixList) {
+      if (infixItem is num) {
+        tempNumberList.addLast(infixItem);
         continue;
       }
 
-      Function operation = getOperation(equationItem);
+      Calculation calculate = infixItem as Calculation;
       num x = tempNumberList.removeLast();
 
-      if (_singleDigitOperators.contains(equationItem) ||
-          (equationItem.length > 1 && equationItem != nthRoot)) {
-        tempNumberList.addLast(operation(x));
-      } else {
+      if (calculate is UnaryCalculation) {
+        // ignore: invocation_of_non_function
+        tempNumberList.addLast(calculate(x));
+      } else if (calculate is BinaryCalculation) {
         num y = tempNumberList.removeLast();
-        tempNumberList.addLast(operation(y, x));
+        // ignore: invocation_of_non_function
+        tempNumberList.addLast(calculate(y, x));
+      } else {
+        throw UnsupportedError;
       }
     }
     return tempNumberList.removeLast();

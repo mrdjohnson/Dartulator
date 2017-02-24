@@ -1,26 +1,38 @@
 const clear = 'C';
 const equals = '=';
 
-const  radians = 'Rad';
-const  degrees = 'Deg';
-const  factorial = 'x!';
+const add = '+';
+const subtract = '-';
+const divide = '÷';
+const divide_human = '/';
+const multiply = '*';
+const factorial_symbol = '!';
+const percent_symbol = '%';
+const decimal = '.';
+const parenthesis_open = '(';
+const parenthesis_close = ')';
+const exponent_symbol = '^';
 
-const  inverse = 'Inv';
-const  sine = 'sin';
-const  naturalLog = 'ln';
+const radians = 'Rad';
+const degrees = 'Deg';
+const factorial = 'x!';
 
-const  pi = 'π';
-const  cosine = 'cos';
-const  logOfX = 'log';
+const inverse = 'Inv';
+const sine = 'sin';
+const naturalLog = 'ln';
 
-const  naturalE = 'e';
-const  tangent = 'tan';
-const  sqrtSymbol = '√';
+const pi = 'π';
+const cosine = 'cos';
+const logOfX = 'log';
 
-const  answer = 'Ans';
-const  zeros = 'EXP';
-const  zerosShort = 'E';
-const  exponent = 'x^y';
+const naturalE = 'e';
+const tangent = 'tan';
+const sqrtSymbol = '√';
+
+const answer = 'Ans';
+const zeros = 'EXP';
+const zerosShort = 'E';
+const exponent = 'x^y';
 
 const arcsin = 'sin^-1';
 const eToPower = 'e^x';
@@ -32,5 +44,5 @@ const arctan = 'tan^-1';
 const squared = 'x^2';
 
 const random = 'Rnd';
-const nthRoot = 'y√x';
+const nthRootSymbol = 'y√x';
 
