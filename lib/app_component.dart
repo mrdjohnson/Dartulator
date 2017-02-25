@@ -49,7 +49,7 @@ class AppComponent {
 //    [random, zeros, nthRoot]
 //  ];
 
-  final RegExp nonNumberMatcher = new RegExp(r"[^0-9]");
+  final RegExp nonNumberMatcher = new RegExp(r"[\D]");
 
   String calculationDisplay = "0";
   List calculationDisplayList = ['0'];

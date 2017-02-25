@@ -13,63 +13,74 @@ abstract class Calculation implements Function {
 
   const Calculation(this._precedenceLevel);
 
-  bool hasLessPrecedenceThan(Calculation other) {
-    return _precedenceLevel.index < other._precedenceLevel.index;
-  }
+  bool hasLessPrecedenceThan(Calculation other) =>
+      _precedenceLevel.index < other._precedenceLevel.index;
 
   @override
   String toString() => "";
-
-// for the arc(sine cosine tangent) functions to switch the answer to degrees if need be
-  static Function arcTrigWrapper(num arcTrigFunction(x)) {
-    num _convertedArcTrigFunction(num x) {
-      num value = arcTrigFunction(x);
-      if (usingDegrees) {
-        value *= 180 / PI;
-      }
-      return value;
-    }
-    return _convertedArcTrigFunction;
-  }
-
-// for the sine cosine tangent functions to switch the answer to degrees if need be
-  static Function trigWrapper(num trigFunction(x)) {
-    num _convertedTrigFunction(num x) {
-      if (usingDegrees) {
-        x *= PI / 180;
-      }
-      return trigFunction(x);
-    }
-    return _convertedTrigFunction;
-  }
 }
 
 abstract class UnaryCalculation extends Calculation {
-  const UnaryCalculation(Precedence levelOfImportance)
-      : super(levelOfImportance);
+  const UnaryCalculation(Precedence precedenceLevel)
+      : super(precedenceLevel);
 
-  num call(num x);
+  num _calculate(num x);
+
+  num call(num x) => _calculate(x);
 }
 
+// use calculate to get value of answer so that incase there are any
 abstract class BinaryCalculation extends Calculation {
-  const BinaryCalculation(Precedence levelOfImportance)
-      : super(levelOfImportance);
+  const BinaryCalculation(Precedence precedenceLevel)
+      : super(precedenceLevel);
 
-  num call(num x, num y);
+  num _calculate(num x, num y);
+
+  num call(num x, num y) => _calculate(x, y);
 }
 
+abstract class TrigCalculation extends UnaryCalculation {
+  const TrigCalculation(Precedence precedenceLevel)
+      : super(precedenceLevel);
+
+// switch the answer to degrees if need be
+  @override
+  num call(num x) {
+    if (Calculation.usingDegrees) {
+      x *= PI / 180;
+    }
+    return _calculate(x);
+  }
+}
+
+abstract class ArcTrigCalculation extends UnaryCalculation {
+  const ArcTrigCalculation(Precedence precedenceLevel)
+      : super(precedenceLevel);
+
+// switch the answer to degrees if need be
+  @override
+  num call(num x) {
+    num value = _calculate(x);
+    if (Calculation.usingDegrees) {
+      value *= 180 / PI;
+    }
+    return value;
+  }
+}
+
+//Empty classes for assisting validators
 class BasicCalculation {}
 
 const Map<String, Calculation> _calculations = const {
-  add: const AddCalculation(),
+  add: const AdditionCalculation(),
   arccos: const ArcCosineCalculation(),
   arcsin: const ArcSineCalculation(),
   arctan: const ArcTangentCalculation(),
 
   cosine: const CosineCalculation(),
 
-  divide: const DivideCalculation(),
-  divide_human: const DivideCalculation(),
+  divide: const DivisionCalculation(),
+  divide_human: const DivisionCalculation(),
 
   eToPower: const BaseECalculation(),
   exponent: const ExponentCalculation(),
@@ -80,7 +91,7 @@ const Map<String, Calculation> _calculations = const {
 
   logOfX: const LogCalculation(),
 
-  multiply: const MultiplyCalculation(),
+  multiply: const MultiplicationCalculation(),
 
   naturalLog: const NaturalLogCalculation(),
   nthRootSymbol: const NthRootCalculation(),
@@ -88,7 +99,7 @@ const Map<String, Calculation> _calculations = const {
   percent_symbol: const PercentCalculation(),
 
   sine: const SineCalculation(),
-  subtract: const SubtractCalculation(),
+  subtract: const SubtractionCalculation(),
   sqrtSymbol: const SqrtCalculation(),
   squared: const SquaredCalculation(),
 
@@ -101,33 +112,33 @@ const Map<String, Calculation> _calculations = const {
 getCalculation(String key) => _calculations[key] ?? key;
 
 
-class AddCalculation extends BinaryCalculation
+class AdditionCalculation extends BinaryCalculation
     implements BasicCalculation {
 
-  const AddCalculation() : super(Precedence.i);
+  const AdditionCalculation() : super(Precedence.i);
 
-  num call(num x, num y) => x + y;
+  num _calculate(num x, num y) => x + y;
 }
 
-class ArcCosineCalculation extends UnaryCalculation {
+class ArcCosineCalculation extends ArcTrigCalculation {
 
   const ArcCosineCalculation() : super(Precedence.v);
 
-  num call(num x) => Calculation.arcTrigWrapper(acos)(x);
+  num _calculate(num x) => acos(x);
 }
 
-class ArcSineCalculation extends UnaryCalculation {
+class ArcSineCalculation extends ArcTrigCalculation {
 
   const ArcSineCalculation() : super(Precedence.v);
 
-  num call(num x) => Calculation.arcTrigWrapper(asin)(x);
+  num _calculate(num x) => asin(x);
 }
 
-class ArcTangentCalculation extends UnaryCalculation {
+class ArcTangentCalculation extends ArcTrigCalculation {
 
   const ArcTangentCalculation() : super(Precedence.v);
 
-  num call(num x) => Calculation.arcTrigWrapper(atan)(x);
+  num _calculate(num x) => atan(x);
 }
 
 
@@ -135,31 +146,31 @@ class BaseTenCalculation extends UnaryCalculation {
 
   const BaseTenCalculation() : super(Precedence.v);
 
-  num call(num exponent) => pow(10, exponent);
+  num _calculate(num exponent) => pow(10, exponent);
 }
 
 class BaseECalculation extends UnaryCalculation {
 
   const BaseECalculation() : super(Precedence.v);
 
-  num call(num exponent) => pow(E, exponent);
+  num _calculate(num exponent) => pow(E, exponent);
 }
 
 
-class CosineCalculation extends UnaryCalculation {
+class CosineCalculation extends TrigCalculation {
 
   const CosineCalculation() : super(Precedence.v);
 
-  num call(num x) => Calculation.trigWrapper(cos)(x);
+  num _calculate(num x) => cos(x);
 }
 
 
-class DivideCalculation extends BinaryCalculation
+class DivisionCalculation extends BinaryCalculation
     implements BasicCalculation {
 
-  const DivideCalculation() : super(Precedence.ii);
+  const DivisionCalculation() : super(Precedence.ii);
 
-  num call(num x, num y) => x / y;
+  num _calculate(num x, num y) => x / y;
 }
 
 
@@ -168,7 +179,7 @@ class ExponentCalculation extends BinaryCalculation
 
   const ExponentCalculation() : super(Precedence.iv);
 
-  num call(num x, num y) => pow(x, y);
+  num _calculate(num x, num y) => pow(x, y);
 }
 
 
@@ -181,7 +192,7 @@ class FactorialCalculation extends UnaryCalculation {
         pow((1 / E) * (x + 1 / (12 * x - 1 / (10 * x))), x);
   }
 
-  num call(num x) {
+  num _calculate(num x) {
     if (x.toString().contains(".")) {
       return gamma(x + 1);
     }
@@ -199,16 +210,16 @@ class LogCalculation extends UnaryCalculation {
 
   const LogCalculation() : super(Precedence.v);
 
-  num call(num x) => log(x) / log(10);
+  num _calculate(num x) => log(x) / log(10);
 }
 
 
-class MultiplyCalculation extends BinaryCalculation
+class MultiplicationCalculation extends BinaryCalculation
     implements BasicCalculation {
 
-  const MultiplyCalculation() : super(Precedence.ii);
+  const MultiplicationCalculation() : super(Precedence.ii);
 
-  num call(num x, num y) => x * y;
+  num _calculate(num x, num y) => x * y;
 }
 
 
@@ -216,14 +227,14 @@ class NaturalLogCalculation extends UnaryCalculation {
 
   const NaturalLogCalculation() : super(Precedence.v);
 
-  num call(num x) => log(x);
+  num _calculate(num x) => log(x);
 }
 
 class NthRootCalculation extends BinaryCalculation {
 
   const NthRootCalculation() : super(Precedence.v);
 
-  num call(num root, num exponent) => pow(root, 1 / exponent);
+  num _calculate(num root, num exponent) => pow(root, 1 / exponent);
 }
 
 
@@ -231,45 +242,45 @@ class PercentCalculation extends BinaryCalculation {
 
   const PercentCalculation() : super(Precedence.iv);
 
-  num call(num x, num y) => x * .01;
+  num _calculate(num x, num y) => x * .01;
 }
 
 
-class SineCalculation extends UnaryCalculation {
+class SineCalculation extends TrigCalculation {
 
   const SineCalculation() : super(Precedence.v);
 
-  num call(num x) => Calculation.trigWrapper(sin)(x);
+  num _calculate(num x) => sin(x);
 }
 
-class SubtractCalculation extends BinaryCalculation
+class SubtractionCalculation extends BinaryCalculation
     implements BasicCalculation {
 
-  const SubtractCalculation() : super(Precedence.i);
+  const SubtractionCalculation() : super(Precedence.i);
 
-  num call(num x, num y) => x - y;
+  num _calculate(num x, num y) => x - y;
 }
 
 class SquaredCalculation extends UnaryCalculation {
 
   const SquaredCalculation() : super(Precedence.v);
 
-  num call(num base) => pow(base, 2);
+  num _calculate(num base) => pow(base, 2);
 }
 
 class SqrtCalculation extends UnaryCalculation {
 
   const SqrtCalculation() : super(Precedence.v);
 
-  num call(num x) => sqrt(x);
+  num _calculate(num x) => sqrt(x);
 }
 
 
-class TangentCalculation extends UnaryCalculation {
+class TangentCalculation extends TrigCalculation {
 
   const TangentCalculation() : super(Precedence.v);
 
-  num call(num x) => Calculation.trigWrapper(tan)(x);
+  num _calculate(num x) => tan(x);
 }
 
 
@@ -277,5 +288,5 @@ class ZerosCalculation extends BinaryCalculation {
 
   const ZerosCalculation() : super(Precedence.v);
 
-  num call(num multiplier, num exponent) => multiplier * pow(10, exponent);
+  num _calculate(num multiplier, num exponent) => multiplier * pow(10, exponent);
 }
